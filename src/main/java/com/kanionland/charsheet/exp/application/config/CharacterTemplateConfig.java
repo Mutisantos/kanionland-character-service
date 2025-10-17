@@ -1,7 +1,5 @@
 package com.kanionland.charsheet.exp.application.config;
 
-import com.kanionland.charsheet.exp.domain.enums.RaceEnum;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -12,25 +10,23 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableConfigurationProperties(CharacterTemplatesProperties.class)
 @RequiredArgsConstructor
-public class DefaultCharacterConfig {
-
-  private final CharacterTemplatesProperties templatesProperties;
+public class CharacterTemplateConfig {
 
   @Bean
-  public Map<RaceEnum, List<String>> raceBodyTemplates() {
-    return templatesProperties.getRaces().entrySet().stream()
+  public BodyTemplates bodyTemplates(CharacterTemplatesProperties properties) {
+    return new BodyTemplates(properties.getRaces().entrySet().stream()
         .collect(Collectors.toMap(
             Map.Entry::getKey,
-            entry -> entry.getValue().getBodyParts()
-        ));
+            e -> e.getValue().getBodyParts()
+        )));
   }
 
   @Bean
-  public Map<RaceEnum, List<String>> raceSkillTemplates() {
-    return templatesProperties.getRaces().entrySet().stream()
+  public StyleTemplates styleTemplates(CharacterTemplatesProperties properties) {
+    return new StyleTemplates(properties.getRaces().entrySet().stream()
         .collect(Collectors.toMap(
             Map.Entry::getKey,
-            entry -> entry.getValue().getStyles()
-        ));
+            e -> e.getValue().getStyles()
+        )));
   }
 }

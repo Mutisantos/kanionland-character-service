@@ -2,7 +2,6 @@ package com.kanionland.charsheet.exp.application.config;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.kanionland.charsheet.exp.application.config.CharacterTemplatesProperties.RaceTemplate;
 import com.kanionland.charsheet.exp.domain.enums.RaceEnum;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

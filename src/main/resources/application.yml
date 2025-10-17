@@ -12,6 +12,51 @@ spring:
     baseline-on-migrate: true
     locations: classpath:db/migration
     connect-retries: 10
+jwt:
+  secret: your-256-bit-secret
+
 
 server:
   port: 8000
+# src/main/resources/application.yml
+characters:
+  templates:
+    races:
+      KANION:
+        bodyParts: [ "Head","Torso","Left Arm","Right Arm","Left Leg","Right Leg" ]
+      ZI_BUM:
+        bodyParts: [ "Head", "Left Arm", "Right Arm", "Left Leg", "Right Leg" ]
+        styles: [ "Cientifico", "Tirador" ]
+      ORTHYS:
+        bodyParts: [ "Head","Torso","Left Arm","Right Arm","Left Leg","Right Leg","Tail" ]
+      PUMIBLU:
+        bodyParts: [ "Head","Torso","Left Arm","Right Arm","Left Leg","Right Leg","Left Ear-Arm","Right Ear-Arm","Tail" ]
+      FIERCY:
+        bodyParts: [ "Head","Torso","Left Arm","Right Arm","Left Leg","Right Leg","Tail" ]
+        styles: [ "Rebuscador", "Tirador" ]
+      LENTILLANO:
+        bodyParts: [ "Eye","Tail","Left Wing","Right Wing" ]
+      EYESHADE:
+        bodyParts: [ "Head","Torso","Left Arm","Right Arm","Left Leg","Right Leg" ]
+        style: [ "Adepto" ]
+      LUIN:
+        bodyParts: [ "Head", "Torso", "Left Arm", "Right Arm", "Left Leg", "Right Leg", "Tail" ]
+      XYRION:
+        bodyParts: [ "Head", "Torso", "Left Arm", "Right Arm", "Left Leg", "Right Leg" ]
+      CETARA:
+        bodyParts: [ "Head", "Torso", "Equine Torso", "Left Arm", "Right Arm", "Left Leg", "Left Leg", "Right Leg", "Right Leg", "Tail" ]
+        styles: [ "Ars Nachina" ]
+      DENDROLIAN:
+        bodyParts: [ "Head","Torso","Left Arm","Right Arm","Left Leg","Right Leg" ]
+      KEYUI:
+        bodyParts: [ "Head", "Torso", "Left Arm", "Right Arm", "Left Leg", "Right Leg" ]
+      UNTOLD:
+        bodyParts: [ "Head","Torso","Left Wing","Right Wing","Left Leg","Right Leg","Tail" ]
+      SKETCHE:
+        bodyParts: [ "Head", "Torso", "Left Arm", "Right Arm", "Left Leg", "Right Leg" ]
+      PRIMAL:
+        bodyParts: [ "Head", "Torso", "Left Arm", "Right Arm", "Left Leg", "Right Leg" ]
+      ROBOT:
+        bodyParts: [ "Head", "Torso", "Left Arm", "Right Arm", "Left Leg", "Right Leg", "Engine" ]
+      OTHER:
+        bodyParts: [ "Head","Torso","Left Arm","Right Arm","Left Leg","Right Leg" ]

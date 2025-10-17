@@ -1,4 +1,4 @@
-package com.kanionland.charsheet.exp.domain.entities;
+package com.kanionland.charsheet.exp.infrastructure.persistence.entities;
 
 import com.kanionland.charsheet.exp.domain.enums.RaceEnum;
 import jakarta.persistence.CascadeType;
@@ -32,7 +32,7 @@ import lombok.Setter;
 )
 @Getter
 @Setter
-public class Character {
+public class CharacterEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -62,33 +62,33 @@ public class Character {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "ranking_id", nullable = false)
-  private Ranking ranking;
+  private RankingEntity ranking;
 
   @OneToMany(mappedBy = "character", cascade = CascadeType.ALL, orphanRemoval = true)
-  private Set<CharacterPart> bodyParts = new HashSet<>();
+  private Set<CharacterPartEntity> bodyParts = new HashSet<>();
 
-  public CharacterPart addPart(Part part) {
-    CharacterPart characterPart = new CharacterPart(this, part);
+  public CharacterPartEntity addPart(PartEntity part) {
+    CharacterPartEntity characterPart = new CharacterPartEntity(this, part);
     bodyParts.add(characterPart);
     return characterPart;
   }
 
-  public List<CharacterPart> addParts(Part part, int count) {
-    List<CharacterPart> addedParts = new ArrayList<>();
+  public List<CharacterPartEntity> addParts(PartEntity part, int count) {
+    List<CharacterPartEntity> addedParts = new ArrayList<>();
     for (int i = 0; i < count; i++) {
       addedParts.add(addPart(part));
     }
     return addedParts;
   }
 
-  public void removePart(CharacterPart part) {
+  public void removePart(CharacterPartEntity part) {
     if (part != null && bodyParts.contains(part)) {
       bodyParts.remove(part);
       part.setCharacter(null);
     }
   }
 
-  public List<CharacterPart> getPartsOfType(Part part) {
+  public List<CharacterPartEntity> getPartsOfType(PartEntity part) {
     return bodyParts.stream()
         .filter(cp -> cp.getPart().equals(part))
         .collect(Collectors.toList());
@@ -96,7 +96,7 @@ public class Character {
 
   public Long getTotalCurrentHealth() {
     return bodyParts.stream()
-        .mapToLong(CharacterPart::getCurrentHealth)
+        .mapToLong(CharacterPartEntity::getCurrentHealth)
         .sum();
   }
 

@@ -1,4 +1,4 @@
-package com.kanionland.charsheet.exp.domain.entities;
+package com.kanionland.charsheet.exp.infrastructure.persistence.entities;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -23,7 +23,7 @@ import lombok.Setter;
 )
 @Getter
 @Setter
-public class Part {
+public class PartEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,23 +36,23 @@ public class Part {
   private Long maxHealth;
 
   @OneToMany(mappedBy = "part", cascade = CascadeType.ALL, orphanRemoval = true)
-  private Set<CharacterPart> characterParts = new HashSet<>();
+  private Set<CharacterPartEntity> characterParts = new HashSet<>();
 
-  public CharacterPart addToCharacter(Character character) {
-    CharacterPart characterPart = new CharacterPart(character, this);
+  public CharacterPartEntity addToCharacter(CharacterEntity character) {
+    CharacterPartEntity characterPart = new CharacterPartEntity(character, this);
     characterParts.add(characterPart);
     character.getBodyParts().add(characterPart);
     return characterPart;
   }
 
-  public Set<CharacterPart> getCharacterParts(Character character) {
+  public Set<CharacterPartEntity> getCharacterParts(CharacterEntity character) {
     return characterParts.stream()
         .filter(cp -> cp.getCharacter().equals(character))
         .collect(Collectors.toSet());
   }
 
-  public void removeFromCharacter(Character character) {
-    Set<CharacterPart> toRemove = characterParts.stream()
+  public void removeFromCharacter(CharacterEntity character) {
+    Set<CharacterPartEntity> toRemove = characterParts.stream()
         .filter(cp -> cp.getCharacter().equals(character))
         .collect(Collectors.toSet());
 

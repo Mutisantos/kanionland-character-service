@@ -1,6 +1,5 @@
-package com.kanionland.charsheet.exp.domain.entities;
+package com.kanionland.charsheet.exp.infrastructure.persistence.entities;
 
-import com.kanionland.charsheet.exp.domain.enums.RaceEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,12 +9,12 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "paths",
+@Table(name = "skills",
     uniqueConstraints = {
         @UniqueConstraint(columnNames = "name")
     }
 )
-public class Path {
+public class SkillEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +23,26 @@ public class Path {
   @Column(unique = true, nullable = false)
   private String name;
 
-//  main skill
+  @Column
+  private String description;
+
+  @Column
+  private Long requiredExperience;
+
+  @Column
+  private Long physicalCost;
+
+  @Column
+  private Long mentalCost;
+
+  @Column
+  private Boolean isUpgradable;
+
+  @Column
+  private Long upgradeLevel;
+
+  @Column
+  private Long upgradePoints;
+
 
 }

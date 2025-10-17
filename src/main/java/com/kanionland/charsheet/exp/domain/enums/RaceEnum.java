@@ -24,16 +24,15 @@ public enum RaceEnum {
   SKETCHE("Sketche"),
   PRIMAL("Primal"),
   ROBOT("Robot"),
-  ALIEN("Alien"),
   OTHER("Other");
 
   private String name;
 
-  public static RaceEnum findByName(final String name){
+  public static RaceEnum findByName(final String name) {
     return Stream.of(RaceEnum.values())
-      .filter(raceEnum -> raceEnum.name().equals(name))
-      .findFirst()
-      .orElse(null);
+        .filter(raceEnum -> raceEnum.name().equals(name))
+        .findFirst()
+        .orElse(null);
   }
 
 }

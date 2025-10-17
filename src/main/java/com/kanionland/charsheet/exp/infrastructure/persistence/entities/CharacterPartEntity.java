@@ -1,4 +1,4 @@
-package com.kanionland.charsheet.exp.domain.entities;
+package com.kanionland.charsheet.exp.infrastructure.persistence.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,7 +16,7 @@ import lombok.Setter;
 @Table(name = "character_parts")
 @Getter
 @Setter
-public class CharacterPart {
+public class CharacterPartEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,19 +24,19 @@ public class CharacterPart {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "character_id", nullable = false)
-  private Character character;
+  private CharacterEntity character;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "part_id", nullable = false)
-  private Part part;
+  private PartEntity part;
 
   @Column(name = "current_health", nullable = false)
   private Long currentHealth;
 
-  protected CharacterPart() {
+  protected CharacterPartEntity() {
   }
 
-  public CharacterPart(Character character, Part part) {
+  public CharacterPartEntity(CharacterEntity character, PartEntity part) {
     this.character = character;
     this.part = part;
     this.currentHealth = part.getMaxHealth();

@@ -1,4 +1,4 @@
-package com.kanionland.charsheet.exp.domain.entities;
+package com.kanionland.charsheet.exp.infrastructure.persistence.entities;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -17,7 +17,7 @@ import lombok.Setter;
 @Table(name = "ranking_levels")
 @Getter
 @Setter
-public class Ranking {
+public class RankingEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,14 +34,14 @@ public class Ranking {
 
   @OneToMany(mappedBy = "ranking", cascade = {CascadeType.PERSIST,
       CascadeType.MERGE}, orphanRemoval = false)
-  private Set<Character> characters = new HashSet<>();
+  private Set<CharacterEntity> characters = new HashSet<>();
 
-  public void addCharacter(Character character) {
+  public void addCharacter(CharacterEntity character) {
     characters.add(character);
     character.setRanking(this);
   }
 
-  public void removeCharacter(Character character) {
+  public void removeCharacter(CharacterEntity character) {
     characters.remove(character);
     character.setRanking(null);
   }

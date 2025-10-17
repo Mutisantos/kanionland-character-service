@@ -1,4 +1,4 @@
-package com.kanionland.charsheet.exp.domain.entities;
+package com.kanionland.charsheet.exp.infrastructure.persistence.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,7 +14,7 @@ import jakarta.persistence.UniqueConstraint;
         @UniqueConstraint(columnNames = "name")
     }
 )
-public class Stat {
+public class StatEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

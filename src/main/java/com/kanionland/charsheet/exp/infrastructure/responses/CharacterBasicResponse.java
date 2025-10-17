@@ -1,7 +1,15 @@
 package com.kanionland.charsheet.exp.infrastructure.responses;
 
 import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
+@Getter
+@Builder
+@AllArgsConstructor
+@EqualsAndHashCode
 public class CharacterBasicResponse {
 
   private String name;

@@ -16,9 +16,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.Setter;
@@ -65,7 +63,7 @@ public class CharacterEntity {
   private RankingEntity ranking;
 
   @OneToMany(mappedBy = "character", cascade = CascadeType.ALL, orphanRemoval = true)
-  private Set<CharacterPartEntity> bodyParts = new HashSet<>();
+  private List<CharacterPartEntity> bodyParts = new ArrayList<>();
 
   public CharacterPartEntity addPart(PartEntity part) {
     CharacterPartEntity characterPart = new CharacterPartEntity(this, part);

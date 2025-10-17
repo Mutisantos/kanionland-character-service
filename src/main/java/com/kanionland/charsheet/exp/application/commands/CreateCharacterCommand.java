@@ -10,13 +10,11 @@ import lombok.Getter;
 @EqualsAndHashCode
 public class CreateCharacterCommand {
 
-  private Long id;
   private String name;
   private RaceEnum race;
   private String title;
   private String gender;
-  private Long age;
-  private Long weight;
-  private Long height;
-  private Long rankingId;
+  private long age;
+  private long weight;
+  private long height;
 }

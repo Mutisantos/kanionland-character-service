@@ -2,8 +2,11 @@ package com.kanionland.charsheet.exp.application.adapters;
 
 import com.kanionland.charsheet.exp.application.commands.CreateCharacterCommand;
 import com.kanionland.charsheet.exp.application.handlers.creation.CharacterCreationChain;
+import com.kanionland.charsheet.exp.application.handlers.creation.CharacterHandler;
+import com.kanionland.charsheet.exp.application.mappers.CharacterMapper;
 import com.kanionland.charsheet.exp.application.ports.CharacterCreationPort;
-import com.kanionland.charsheet.exp.infrastructure.mappers.CharacterEntityMapper;
+import com.kanionland.charsheet.exp.domain.models.CharacterModel;
+import com.kanionland.charsheet.exp.infrastructure.persistence.entities.CharacterEntity;
 import com.kanionland.charsheet.exp.infrastructure.persistence.repositories.CharacterRepository;
 import com.kanionland.charsheet.exp.infrastructure.responses.CharacterBasicResponse;
 import lombok.RequiredArgsConstructor;
@@ -14,12 +17,31 @@ import org.springframework.stereotype.Service;
 public class CharacterCreationAdapter implements CharacterCreationPort {
 
   private final CharacterRepository characterRepository;
-  private final CharacterEntityMapper characterEntityMapper;
+  private final CharacterMapper mapper;
   private final CharacterCreationChain characterCreationChain;
 
   @Override
   public CharacterBasicResponse createCharacter(CreateCharacterCommand creationCommand) {
-    return null;
+    CharacterModel.CharacterModelBuilder builder = buildCharacter(creationCommand);
+    final CharacterHandler characterHandler = characterCreationChain.buildChain();
+    CharacterModel character = characterCreationChain.buildChain()
+        .handle(builder, creationCommand.getRace())
+        .build();
+    CharacterEntity entity = mapper.toEntity(character);
+    CharacterEntity savedEntity = characterRepository.save(entity);
+    return mapper.toResponse(savedEntity);
+  }
+
+  private CharacterModel.CharacterModelBuilder buildCharacter(
+      CreateCharacterCommand creationCommand) {
+    return CharacterModel.builder()
+        .name(creationCommand.getName())
+        .race(creationCommand.getRace())
+        .title(creationCommand.getTitle())
+        .gender(creationCommand.getGender())
+        .age(creationCommand.getAge())
+        .height(creationCommand.getHeight())
+        .weight(creationCommand.getWeight());
   }
 
 }

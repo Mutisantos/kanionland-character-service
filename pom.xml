@@ -132,7 +132,7 @@
     <dependency>
       <artifactId>h2</artifactId>
       <groupId>com.h2database</groupId>
-      <scope>runtime</scope>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <artifactId>postgresql</artifactId>

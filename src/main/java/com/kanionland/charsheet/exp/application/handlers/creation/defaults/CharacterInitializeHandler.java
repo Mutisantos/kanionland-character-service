@@ -1,4 +1,4 @@
-package com.kanionland.charsheet.exp.application.handlers.creation;
+package com.kanionland.charsheet.exp.application.handlers.creation.defaults;
 
 import com.kanionland.charsheet.exp.domain.enums.RaceEnum;
 import com.kanionland.charsheet.exp.domain.models.CharacterModel.CharacterModelBuilder;

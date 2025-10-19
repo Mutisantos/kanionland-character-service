@@ -1,16 +1,16 @@
-package com.kanionland.charsheet.exp.application.handlers.creation;
+package com.kanionland.charsheet.exp.application.handlers.creation.defaults;
 
 import com.kanionland.charsheet.exp.domain.enums.RaceEnum;
 import com.kanionland.charsheet.exp.domain.models.CharacterModel;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public abstract class AbstractCharacterHandler implements CharacterHandler {
+public abstract class AbstractCharacterHandler implements CharacterDefaultsHandler {
 
-  private CharacterHandler next;
+  private CharacterDefaultsHandler next;
 
   @Override
-  public CharacterHandler setNext(CharacterHandler next) {
+  public CharacterDefaultsHandler setNext(CharacterDefaultsHandler next) {
     this.next = next;
     return next;
   }

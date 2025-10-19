@@ -1,4 +1,4 @@
-package com.kanionland.charsheet.exp.application.handlers.creation;
+package com.kanionland.charsheet.exp.application.handlers.creation.defaults;
 
 
 import com.kanionland.charsheet.exp.application.config.StyleTemplates;

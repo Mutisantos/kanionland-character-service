@@ -1,20 +1,26 @@
-package com.kanionland.charsheet.exp.application.handlers.creation;
+package com.kanionland.charsheet.exp.application.handlers.creation.defaults;
 
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class CharacterCreationChain {
+public class CharacterDefaultsChain {
 
   private final CharacterInitializeHandler initializeHandler;
   private final BodyRaceTemplateHandler bodyRaceTemplateHandler;
   private final StylesRaceTemplateHandler stylesRaceTemplateHandler;
 
-  public CharacterHandler buildChain() {
+  @PostConstruct
+  public CharacterDefaultsHandler buildChain() {
     initializeHandler
         .setNext(bodyRaceTemplateHandler)
         .setNext(stylesRaceTemplateHandler);
+    return initializeHandler;
+  }
+
+  public CharacterDefaultsHandler getInitialChainHandler() {
     return initializeHandler;
   }
 }

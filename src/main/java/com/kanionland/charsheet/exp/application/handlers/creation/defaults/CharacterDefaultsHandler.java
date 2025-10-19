@@ -1,12 +1,12 @@
-package com.kanionland.charsheet.exp.application.handlers.creation;
+package com.kanionland.charsheet.exp.application.handlers.creation.defaults;
 
 import com.kanionland.charsheet.exp.domain.enums.RaceEnum;
 import com.kanionland.charsheet.exp.domain.models.CharacterModel;
 
-public interface CharacterHandler {
+public interface CharacterDefaultsHandler {
 
   CharacterModel.CharacterModelBuilder handle(CharacterModel.CharacterModelBuilder builder,
       RaceEnum race);
 
-  CharacterHandler setNext(CharacterHandler next);
+  CharacterDefaultsHandler setNext(CharacterDefaultsHandler next);
 }

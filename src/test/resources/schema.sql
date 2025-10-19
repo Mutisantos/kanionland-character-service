@@ -24,3 +24,19 @@ CREATE TABLE IF NOT EXISTS character_parts (
     FOREIGN KEY (part_id) REFERENCES parts(id),
     FOREIGN KEY (character_id) REFERENCES characters(id)
 );
+
+
+INSERT INTO parts (max_health, name) VALUES (100, 'Head');
+INSERT INTO parts (max_health, name) VALUES (100, 'Torso');
+INSERT INTO parts (max_health, name) VALUES (100, 'Left Arm');
+INSERT INTO parts (max_health, name) VALUES (100, 'Right Arm');
+INSERT INTO parts (max_health, name) VALUES (100, 'Left Leg');
+INSERT INTO parts (max_health, name) VALUES (100, 'Right Leg');
+INSERT INTO parts (max_health, name) VALUES (100, 'Left Ear-Arm');
+INSERT INTO parts (max_health, name) VALUES (100, 'Right Ear-Arm');
+INSERT INTO parts (max_health, name) VALUES (100, 'Tail');
+INSERT INTO parts (max_health, name) VALUES (100, 'Left Wing');
+INSERT INTO parts (max_health, name) VALUES (100, 'Right Wing');
+INSERT INTO parts (max_health, name) VALUES (100, 'Eye');
+INSERT INTO parts (max_health, name) VALUES (100, 'Equine Torso');
+INSERT INTO parts (max_health, name) VALUES (100, 'Engine');

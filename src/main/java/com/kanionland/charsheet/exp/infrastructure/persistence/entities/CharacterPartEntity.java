@@ -33,9 +33,6 @@ public class CharacterPartEntity {
   @Column(name = "current_health", nullable = false)
   private Long currentHealth;
 
-  protected CharacterPartEntity() {
-  }
-
   public CharacterPartEntity(CharacterEntity character, PartEntity part) {
     this.character = character;
     this.part = part;

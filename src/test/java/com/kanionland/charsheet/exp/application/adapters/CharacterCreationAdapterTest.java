@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @ActiveProfiles("test")
 @Transactional
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class CharacterCreationTest {
+class CharacterCreationAdapterTest {
 
   @Autowired
   private CharacterCreationAdapter adapter;

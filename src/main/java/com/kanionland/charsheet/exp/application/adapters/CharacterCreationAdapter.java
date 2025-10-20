@@ -2,6 +2,7 @@ package com.kanionland.charsheet.exp.application.adapters;
 
 import com.kanionland.charsheet.exp.application.commands.CreateCharacterCommand;
 import com.kanionland.charsheet.exp.application.handlers.creation.defaults.CharacterDefaultsChain;
+import com.kanionland.charsheet.exp.application.handlers.creation.persistence.CharacterRelationsChain;
 import com.kanionland.charsheet.exp.application.mappers.CharacterMapper;
 import com.kanionland.charsheet.exp.application.ports.CharacterCreationPort;
 import com.kanionland.charsheet.exp.domain.models.CharacterModel;
@@ -20,6 +21,7 @@ public class CharacterCreationAdapter implements CharacterCreationPort {
   private final PartRepository partRepository;
   private final CharacterMapper mapper;
   private final CharacterDefaultsChain characterDefaultsChain;
+  private final CharacterRelationsChain characterRelationsChain;
 
   @Override
   public CharacterBasicResponse createCharacter(CreateCharacterCommand creationCommand) {

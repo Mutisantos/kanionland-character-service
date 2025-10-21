@@ -1,6 +1,6 @@
 package com.kanionland.charsheet.exp.infrastructure.persistence.repositories;
 
-import com.kanionland.charsheet.exp.infrastructure.persistence.entities.PartEntity;
+import com.kanionland.charsheet.exp.infrastructure.persistence.entities.SkillEntity;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -10,10 +10,10 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PartRepository extends JpaRepository<PartEntity, Long> {
+public interface SkillRepository extends JpaRepository<SkillEntity, Long> {
 
-  Optional<PartEntity> findByName(String name);
+  Optional<SkillEntity> findByName(String name);
 
-  @Query("SELECT part FROM PartEntity part WHERE part.name IN :names")
-  List<PartEntity> findByNameIn(@Param("names") Collection<String> names);
+  @Query("SELECT part FROM SkillEntity part WHERE part.name IN :names")
+  List<SkillEntity> findByNameIn(@Param("names") Collection<String> names);
 }

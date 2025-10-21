@@ -14,6 +14,8 @@ import lombok.NoArgsConstructor;
 public class Part {
 
   private String name;
-  private Long maxHealth;
+  
+  @Builder.Default
+  private Long maxHealth = 100L;
 
 }

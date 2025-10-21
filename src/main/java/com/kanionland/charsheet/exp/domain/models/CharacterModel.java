@@ -27,18 +27,9 @@ public class CharacterModel {
   private List<Part> bodyParts;
   private List<Item> inventory;
   private List<EquippableObject> equipment;
-  private List<Stat> stats;
   private List<Skill> skills;
-  private List<Style> styles;
-  private List<Path> paths;
+  private List<CharacterStyle> styles;
+  private List<CharacterStat> stats;
+  private List<CharacterPath> paths;
 
-  public void addPart(Part part) {
-    bodyParts.add(part);
-  }
-
-  public void removePart(Part part) {
-    if (part != null && bodyParts.contains(part)) {
-      bodyParts.remove(part);
-    }
-  }
 }

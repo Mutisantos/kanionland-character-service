@@ -23,7 +23,7 @@ public class RankingEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "level", unique = true, nullable = false)
+  @Column(name = "ranking_level", unique = true, nullable = false)
   private Long level;
 
   @Column(name = "points_required", nullable = false)

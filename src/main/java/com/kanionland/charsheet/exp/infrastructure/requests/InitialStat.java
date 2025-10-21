@@ -16,5 +16,6 @@ public class InitialStat {
   private String name;
   private int initialLevel;
   private int initialExp;
+  private int initialLimit;
 
 }

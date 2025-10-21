@@ -11,8 +11,14 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-public class Style {
+public class CharacterStyle {
 
   private String name;
   private String styleClass;
+
+  @Builder.Default
+  private long rankLevel = 0L;
+
+  @Builder.Default
+  private long usedExperience = 0L;
 }

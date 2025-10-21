@@ -4,9 +4,10 @@ package com.kanionland.charsheet.exp.application.handlers.creation.defaults;
 import com.kanionland.charsheet.exp.application.config.StyleTemplates;
 import com.kanionland.charsheet.exp.domain.enums.RaceEnum;
 import com.kanionland.charsheet.exp.domain.models.CharacterModel;
-import com.kanionland.charsheet.exp.domain.models.Style;
+import com.kanionland.charsheet.exp.domain.models.CharacterStyle;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +20,28 @@ public class StylesRaceTemplateHandler extends AbstractCharacterHandler {
   @Override
   protected CharacterModel.CharacterModelBuilder process(
       CharacterModel.CharacterModelBuilder builder, RaceEnum race) {
-    List<Style> styles = styleTemplates.getTemplates().getOrDefault(race, List.of()).stream()
-        .map(styleName -> Style.builder()
+
+    final List<CharacterStyle> incomingStyles = builder.build().getStyles();
+    final List<CharacterStyle> defaultStyles = styleTemplates.getTemplates()
+        .getOrDefault(race, List.of())
+        .stream()
+        .map(styleName -> CharacterStyle.builder()
             .name(styleName)
             .styleClass(styleName.toLowerCase().replace(" ", "-"))
             .build())
         .collect(Collectors.toList());
-    return builder.styles(styles);
+    if (!defaultStyles.isEmpty()) {
+      List<CharacterStyle> combinedStyles = Stream.concat(
+              incomingStyles.stream(),
+              defaultStyles.stream()
+                  .filter(newStyle -> incomingStyles.stream()
+                      .noneMatch(existing -> existing.getName().equals(newStyle.getName())))
+          )
+          .collect(Collectors.toList());
+      builder.styles(combinedStyles);
+    } else {
+      builder.styles(incomingStyles);
+    }
+    return builder;
   }
 }

@@ -15,11 +15,7 @@ public class CharacterInitializeHandler extends AbstractCharacterHandler {
       final RaceEnum race) {
     return builder
         .inventory(new ArrayList<>())
-        .skills(new ArrayList<>())
-        .bodyParts(new ArrayList<>())
         .equipment(new ArrayList<>())
-        .stats(new ArrayList<>())
-        .styles(new ArrayList<>())
         .paths(new ArrayList<>());
   }
 }

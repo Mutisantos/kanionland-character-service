@@ -9,11 +9,12 @@ import com.kanionland.charsheet.exp.infrastructure.persistence.repositories.Part
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@Service
 @RequiredArgsConstructor
 public class CharacterPartsHandler extends AbstractRelationsHandler {
 
@@ -21,14 +22,14 @@ public class CharacterPartsHandler extends AbstractRelationsHandler {
 
   @Override
   protected CharacterEntity process(CharacterEntity newCharacter, final CharacterModel model) {
-    return null;
+    return processParts(newCharacter, model);
   }
 
   private CharacterEntity processParts(CharacterEntity newCharacter,
       final CharacterModel characterModel) {
-    Set<String> partNames = characterModel.getBodyParts().stream()
+    List<String> partNames = characterModel.getBodyParts().stream()
         .map(Part::getName)
-        .collect(Collectors.toSet());
+        .collect(Collectors.toList());
 
     Map<String, PartEntity> existingParts = partRepository.findByNameIn(partNames)
         .stream()
@@ -42,6 +43,7 @@ public class CharacterPartsHandler extends AbstractRelationsHandler {
             existingParts.get(part.getName()));
         characterParts.add(characterPart);
       }
+      // TODO add logging when a part is not found
     }
     newCharacter.setBodyParts(characterParts);
     return newCharacter;

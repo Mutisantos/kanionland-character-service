@@ -11,13 +11,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Set;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -60,49 +61,40 @@ public class CharacterEntity {
   @Column(nullable = false)
   private Long height;
 
+  @Column(nullable = false)
+  private Long thirst;
+
+  @Column(nullable = false)
+  private Long hunger;
+
+  @Column(nullable = false)
+  private Long sleep;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "ranking_id", nullable = false)
   private RankingEntity ranking;
 
   @OneToMany(mappedBy = "character", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<CharacterPartEntity> bodyParts = new ArrayList<>();
+  private List<CharacterPartEntity> bodyParts;
 
-  public CharacterPartEntity addPart(PartEntity part) {
-    CharacterPartEntity characterPart = new CharacterPartEntity(this, part);
-    bodyParts.add(characterPart);
-    return characterPart;
-  }
+  @OneToMany(mappedBy = "character", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<CharacterStatEntity> stats;
 
-  public List<CharacterPartEntity> addParts(PartEntity part, int count) {
-    List<CharacterPartEntity> addedParts = new ArrayList<>();
-    for (int i = 0; i < count; i++) {
-      addedParts.add(addPart(part));
-    }
-    return addedParts;
-  }
+  @ManyToMany
+  @JoinTable(
+      name = "character_skills",
+      joinColumns = @JoinColumn(name = "character_id"),
+      inverseJoinColumns = @JoinColumn(name = "skill_id")
+  )
+  private Set<SkillEntity> skills;
 
-  public void removePart(CharacterPartEntity part) {
-    if (part != null && bodyParts.contains(part)) {
-      bodyParts.remove(part);
-      part.setCharacter(null);
-    }
-  }
+  @ManyToMany
+  @JoinTable(
+      name = "character_styles",
+      joinColumns = @JoinColumn(name = "character_id"),
+      inverseJoinColumns = @JoinColumn(name = "style_id")
+  )
+  private Set<StyleEntity> styles;
 
-  public List<CharacterPartEntity> getPartsOfType(PartEntity part) {
-    return bodyParts.stream()
-        .filter(cp -> cp.getPart().equals(part))
-        .collect(Collectors.toList());
-  }
 
-  public Long getTotalCurrentHealth() {
-    return bodyParts.stream()
-        .mapToLong(CharacterPartEntity::getCurrentHealth)
-        .sum();
-  }
-
-  public Long getTotalMaxHealth() {
-    return bodyParts.stream()
-        .mapToLong(cp -> cp.getPart().getMaxHealth())
-        .sum();
-  }
 }

@@ -12,8 +12,9 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-public class Path {
+public class CharacterPath {
 
   private String name;
+  private long pointsEarned;
 
 }

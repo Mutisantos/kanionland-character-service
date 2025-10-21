@@ -12,10 +12,15 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-public class Stat {
+public class CharacterStat {
 
   private String name;
   private String abbreviation;
-  private Long levelUpExperience;
+  private long experience;
+  private long level;
+  private long mastery;
+  private long bonus;
+  private long penalty;
+  private long limit;
 
 }

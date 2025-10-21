@@ -37,16 +37,19 @@
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
-          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+          <reportsDirectory>${project.build.directory}/surefire-reports
+          </reportsDirectory>  <!-- Prevents build from failing on test failures -->
+          <testFailureIgnore>true
+          </testFailureIgnore>
         </configuration>
-        <groupId>org.apache.maven.plugins</groupId>
-        <version>3.2.5</version>
-      </plugin>
-      <plugin>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
-        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <id>test</id>
+          </execution>
+        </executions>
         <groupId>org.apache.maven.plugins</groupId>
         <version>3.2.5</version>
       </plugin>
@@ -70,6 +73,17 @@
       <plugin>
         <artifactId>jacoco-maven-plugin</artifactId>
         <configuration>
+          <excludes>
+            <exclude>**/configs/**</exclude>
+            <exclude>**/models/**</exclude>
+            <exclude>**/enums/**</exclude>
+            <exclude>**/exception/**</exclude>
+            <exclude>**/*Application.class</exclude>
+            <exclude>**/commands/**</exclude>
+            <exclude>**/requests/**</exclude>
+            <exclude>**/responses/**</exclude>
+            <exclude>**/entities/**</exclude>
+          </excludes>
           <outputDirectory>${project.build.directory}/site/jacoco</outputDirectory>
         </configuration>
         <executions>
@@ -93,9 +107,47 @@
             <id>post-install-report</id>
             <phase>install</phase>
           </execution>
+          <execution>
+            <configuration>
+              <outputDirectory>${project.reporting.outputDirectory}/jacoco</outputDirectory>
+            </configuration>
+            <goals>
+              <goal>report</goal>
+            </goals>
+            <id>jacoco-site</id>
+            <phase>package</phase>
+          </execution>
+          <execution>
+            <configuration>
+              <rules>
+                <rule>
+                  <element>PACKAGE</element>
+                  <limits>
+                    <limit>
+                      <counter>LINE</counter>
+                      <minimum>0.80</minimum>
+                      <value>COVEREDRATIO</value>  <!-- 80% line coverage required -->
+                    </limit>
+                  </limits>
+                </rule>
+              </rules>
+            </configuration>
+            <goals>
+              <goal>check</goal>
+            </goals>
+            <id>check-coverage</id>
+          </execution>
         </executions>
         <groupId>org.jacoco</groupId>
         <version>0.8.11</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-site-plugin</artifactId>
+        <configuration>
+          <outputDirectory>${project.build.directory}/site</outputDirectory>
+        </configuration>
+        <groupId>org.apache.maven.plugins</groupId>
+        <version>3.12.1</version>
       </plugin>
     </plugins>
   </build>

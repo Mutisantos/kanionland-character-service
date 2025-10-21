@@ -4,6 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.kanionland.charsheet.exp.application.commands.CreateCharacterCommand;
 import com.kanionland.charsheet.exp.domain.enums.RaceEnum;
+import com.kanionland.charsheet.exp.infrastructure.persistence.repositories.CharacterRepository;
+import com.kanionland.charsheet.exp.infrastructure.persistence.repositories.PartRepository;
+import com.kanionland.charsheet.exp.infrastructure.persistence.repositories.SkillRepository;
+import com.kanionland.charsheet.exp.infrastructure.persistence.repositories.StatRepository;
 import com.kanionland.charsheet.exp.infrastructure.requests.InitialStat;
 import com.kanionland.charsheet.exp.infrastructure.responses.CharacterBasicResponse;
 import com.kanionland.charsheet.exp.infrastructure.responses.StyleResponse;
@@ -21,29 +25,52 @@ import org.springframework.transaction.annotation.Transactional;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class CharacterCreationAdapterIT {
 
+  public static final List<String> STYLES_LIST = List.of(
+      "Caballero", "Adepto", "Artista Marcial");
+  public static final String CHARACTER_NAME = "Nuzz";
+  public static final String CHARACTER_TITLE = "Aventurero";
+  public static final String CHARACTER_GENDER = "Masculino";
+  public static final int CHARACTER_AGE = 20;
   @Autowired
   private CharacterCreationAdapter adapter;
 
+  @Autowired
+  private CharacterRepository characterRepository;
+
+  @Autowired
+  private PartRepository partRepository;
+
+  @Autowired
+  private SkillRepository skillRepository;
+
+  @Autowired
+  private StatRepository statRepository;
+
+  @Autowired
+  private StyleResponse styleResponse;
+
   @Test
   void shouldCreateCharacterWithRaceTemplates() {
+    //Given
     CreateCharacterCommand command = CreateCharacterCommand.builder()
-        .name("Nuzz")
+        .name(CHARACTER_NAME)
         .race(RaceEnum.KANION)
-        .title("Aventurero")
-        .gender("Masculino")
-        .age(20)
+        .title(CHARACTER_TITLE)
+        .gender(CHARACTER_GENDER)
+        .age(CHARACTER_AGE)
         .weight(70)
         .height(100)
         .bodyParts(List.of("Head", "Left Arm", "Right Arm", "Left Leg", "Right Leg"))
-        .styles(List.of("Caballero", "Adepto", "Artista Marcial"))
+        .styles(STYLES_LIST)
         .stats(generateInitialStats())
         .build();
-
+    //When
     CharacterBasicResponse response = adapter.createCharacter(command);
-
-    assertThat(response.getBodyParts()).hasSize(5); // ZI_BUM has 5 body parts
-    assertThat(response.getStyles().stream().map(StyleResponse::getName).toList()).contains(
-        "Cientifico", "Tirador");
+    //Then
+    assertThat(response.getBodyParts()).hasSize(6); // Kanion has 6 body parts
+    assertThat(
+        response.getStyles().stream().map(StyleResponse::getName).toList()).containsAll(
+        STYLES_LIST);
   }
 
   private List<InitialStat> generateInitialStats() {

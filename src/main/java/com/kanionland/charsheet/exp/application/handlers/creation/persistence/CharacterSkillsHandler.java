@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +24,9 @@ public class CharacterSkillsHandler extends AbstractRelationsHandler {
 
   private CharacterEntity processSkills(CharacterEntity newCharacter,
       final CharacterModel characterModel) {
+    if (CollectionUtils.isEmpty(characterModel.getSkills())) {
+      return newCharacter;
+    }
     Set<String> skillNames = characterModel.getSkills().stream()
         .map(Skill::getName)
         .collect(Collectors.toSet());

@@ -31,7 +31,7 @@ public class StatRaceEntity {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @MapsId("statId")
-  @JoinColumn(name = "id", nullable = false)
+  @JoinColumn(name = "stat_id", nullable = false)
   private StatEntity stat;
 
   @Enumerated(EnumType.STRING)
@@ -41,7 +41,7 @@ public class StatRaceEntity {
   @Column(name = "race_limit", nullable = false)
   private Long raceLimit;
 
-  @Column(name = "race_experience_multiplier", nullable = false)
+  @Column(name = "race_experience_multiplier", nullable = false, precision = 4, scale = 2)
   private BigDecimal raceExperienceMultiplier;
 
   public void setStat(StatEntity stat) {

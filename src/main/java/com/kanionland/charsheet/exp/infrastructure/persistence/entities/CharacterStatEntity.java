@@ -46,7 +46,7 @@ public class CharacterStatEntity {
   private Long penalty;
 
   @Column(nullable = false)
-  private Long limit;
+  private Long statLimit;
 
   public CharacterStatEntity(CharacterEntity character, StatEntity stat, long initialLevel,
       long initialExp, long initialLimit) {
@@ -54,7 +54,7 @@ public class CharacterStatEntity {
     this.stat = stat;
     this.experience = initialExp;
     this.level = initialLevel;
-    this.limit = initialLimit;
+    this.statLimit = initialLimit;
     this.mastery = 0L;
     this.bonus = 0L;
     this.penalty = 0L;

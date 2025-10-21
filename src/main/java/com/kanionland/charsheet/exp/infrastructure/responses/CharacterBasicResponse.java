@@ -16,11 +16,11 @@ public class CharacterBasicResponse {
   private String race;
   private String title;
   private String gender;
-  private Long age;
-  private Long weight;
-  private Long height;
-  private Long rankingId;
-  private Long characterRank;
+  private int age;
+  private int weight;
+  private int height;
+  private int rankingId;
+  private int characterRank;
   private List<String> inventory;
   private List<String> skills;
   private List<CharacterPartResponse> bodyParts;

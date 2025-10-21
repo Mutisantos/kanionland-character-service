@@ -14,7 +14,7 @@ import lombok.Setter;
 public class StyleResponse {
 
   private String name;
-  private Long experience;
-  private Long totalLevel;
+  private long experience;
+  private long totalLevel;
 
 }

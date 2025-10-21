@@ -27,7 +27,7 @@ public class CharacterCreationAdapter implements CharacterCreationPort {
 
   @Override
   public CharacterBasicResponse createCharacter(CreateCharacterCommand creationCommand) {
-    CharacterModel.CharacterModelBuilder builder = buildCharacter(creationCommand);
+    CharacterModel.CharacterModelBuilder builder = buildCharacterFromCommand(creationCommand);
     CharacterModel character = characterDefaultsChain.getInitialChainHandler()
         .handle(builder, creationCommand.getRace())
         .build();
@@ -39,7 +39,7 @@ public class CharacterCreationAdapter implements CharacterCreationPort {
   }
 
 
-  private CharacterModel.CharacterModelBuilder buildCharacter(
+  private CharacterModel.CharacterModelBuilder buildCharacterFromCommand(
       CreateCharacterCommand creationCommand) {
     return CharacterModel.builder()
         .name(creationCommand.getName())

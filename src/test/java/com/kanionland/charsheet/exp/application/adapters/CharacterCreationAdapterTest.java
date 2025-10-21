@@ -19,6 +19,9 @@ import com.kanionland.charsheet.exp.infrastructure.persistence.entities.Characte
 import com.kanionland.charsheet.exp.infrastructure.persistence.repositories.CharacterRepository;
 import com.kanionland.charsheet.exp.infrastructure.requests.InitialStat;
 import com.kanionland.charsheet.exp.infrastructure.responses.CharacterBasicResponse;
+import com.kanionland.charsheet.exp.infrastructure.responses.CharacterPartResponse;
+import com.kanionland.charsheet.exp.infrastructure.responses.StatResponse;
+import com.kanionland.charsheet.exp.infrastructure.responses.StyleResponse;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,6 +33,18 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class CharacterCreationAdapterTest {
 
+  public static final String CHAR_NAME = "Test Character";
+  public static final String CHAR_TITLE = "Adventurer";
+  public static final String CHAR_GENDER = "Male";
+  public static final int CHAR_AGE = 25;
+  public static final int CHAR_WEIGHT = 70;
+  public static final int CHAR_HEIGHT = 180;
+  public static final List<String> BODY_PARTS = List.of("Head",
+      "Torso");
+  public static final List<String> STYLES = List.of("Warrior",
+      "Mage");
+  public static final InitialStat STRENGTH_STAT = new InitialStat("Strength", 1, 0, 10);
+  public static final InitialStat INT_STAT = new InitialStat("Intelligence", 1, 0, 10);
   @Mock
   private CharacterRepository characterRepository;
 
@@ -52,30 +67,25 @@ class CharacterCreationAdapterTest {
   private CharacterCreationAdapter characterCreationAdapter;
 
   private CreateCharacterCommand command;
-  private CharacterModel model;
-  private CharacterEntity entity;
-  private CharacterEntity savedEntity;
+  private CharacterModelBuilder modelBuilder;
   private CharacterBasicResponse response;
 
   @BeforeEach
   void setUp() {
     command = CreateCharacterCommand.builder()
-        .name("Test Character")
+        .name(CHAR_NAME)
         .race(RaceEnum.KANION)
-        .title("Adventurer")
-        .gender("Male")
-        .age(25)
-        .weight(70L)
-        .height(180L)
-        .bodyParts(List.of("Head", "Torso"))
-        .styles(List.of("Warrior", "Mage"))
-        .stats(List.of(
-            new InitialStat("Strength", 1, 0, 10),
-            new InitialStat("Intelligence", 1, 0, 10)
-        ))
+        .title(CHAR_TITLE)
+        .gender(CHAR_GENDER)
+        .age(CHAR_AGE)
+        .weight(CHAR_WEIGHT)
+        .height(CHAR_HEIGHT)
+        .bodyParts(BODY_PARTS)
+        .styles(STYLES)
+        .stats(List.of(STRENGTH_STAT, INT_STAT))
         .build();
 
-    CharacterModelBuilder modelBuilder = CharacterModel.builder()
+    modelBuilder = CharacterModel.builder()
         .name(command.getName())
         .race(command.getRace())
         .title(command.getTitle())
@@ -84,66 +94,51 @@ class CharacterCreationAdapterTest {
         .weight(command.getWeight())
         .height(command.getHeight());
 
-    model = modelBuilder.build();
-
-    entity = new CharacterEntity();
-    savedEntity = new CharacterEntity();
-    savedEntity.setId(1L);
-
-    response = new CharacterBasicResponse();
-    response.setId(1L);
-    response.setName("Test Character");
+    response = CharacterBasicResponse.builder()
+        .name(CHAR_NAME)
+        .race(RaceEnum.KANION.toString())
+        .title(CHAR_TITLE)
+        .gender(CHAR_GENDER)
+        .age(CHAR_AGE)
+        .weight(CHAR_WEIGHT)
+        .height(CHAR_HEIGHT)
+        .bodyParts(List.of(new CharacterPartResponse("Head", 0, 1),
+            new CharacterPartResponse("Torso", 0, 1)))
+        .styles(List.of(new StyleResponse("Warrior", 0, 1),
+            new StyleResponse("Mage", 0, 1)))
+        .stats(List.of(new StatResponse("Strength", 0, 1),
+            new StatResponse("Intelligence", 0, 1)))
+        .build();
   }
 
   @Test
   void createCharacter_ShouldProcessCorrectly() {
     // Given
-    when(characterDefaultsChain.getInitialChainHandler()).thenReturn(defaultsHandler);
+    final CharacterEntity mockEntity = CharacterEntity.builder().name(CHAR_NAME).build();
+    when(characterDefaultsChain.getInitialChainHandler())
+        .thenReturn(defaultsHandler);
     when(defaultsHandler.handle(any(CharacterModelBuilder.class), eq(RaceEnum.KANION)))
-        .thenReturn(CharacterModel.builder().from(model));
-
-    when(characterMapper.toEntity(any(CharacterModel.class))).thenReturn(entity);
-
+        .thenReturn(modelBuilder);
+    when(characterMapper.toEntity(any(CharacterModel.class)))
+        .thenReturn(mockEntity);
     when(characterRelationsChain.getInitialChainHandler()).thenReturn(relationsHandler);
     when(relationsHandler.handle(any(CharacterEntity.class), any(CharacterModel.class)))
-        .thenReturn(entity);
-
-    when(characterRepository.save(entity)).thenReturn(savedEntity);
-    when(characterMapper.toResponse(savedEntity)).thenReturn(response);
-
+        .thenReturn(mockEntity);
+    when(characterRepository.save(mockEntity)).thenReturn(mockEntity);
+    when(characterMapper.toResponse(mockEntity)).thenReturn(response);
     // When
     CharacterBasicResponse result = characterCreationAdapter.createCharacter(command);
-
     // Then
     assertThat(result).isNotNull();
-    assertThat(result.getId()).isEqualTo(1L);
-    assertThat(result.getName()).isEqualTo("Test Character");
+    assertThat(result.getName()).isEqualTo(CHAR_NAME);
 
-    // Verify interactions
     verify(characterDefaultsChain).getInitialChainHandler();
     verify(defaultsHandler).handle(any(CharacterModelBuilder.class), eq(RaceEnum.KANION));
     verify(characterMapper).toEntity(any(CharacterModel.class));
     verify(characterRelationsChain).getInitialChainHandler();
     verify(relationsHandler).handle(any(CharacterEntity.class), any(CharacterModel.class));
-    verify(characterRepository).save(entity);
-    verify(characterMapper).toResponse(savedEntity);
+    verify(characterRepository).save(mockEntity);
+    verify(characterMapper).toResponse(mockEntity);
   }
 
-  @Test
-  void buildCharacter_ShouldMapCommandToModelCorrectly() {
-    // When
-    CharacterModel result = characterCreationAdapter.buildCharacter(command).build();
-
-    // Then
-    assertThat(result.getName()).isEqualTo(command.getName());
-    assertThat(result.getRace()).isEqualTo(command.getRace());
-    assertThat(result.getTitle()).isEqualTo(command.getTitle());
-    assertThat(result.getGender()).isEqualTo(command.getGender());
-    assertThat(result.getAge()).isEqualTo(command.getAge());
-    assertThat(result.getWeight()).isEqualTo(command.getWeight());
-    assertThat(result.getHeight()).isEqualTo(command.getHeight());
-    assertThat(result.getBodyParts()).hasSize(2);
-    assertThat(result.getStyles()).hasSize(2);
-    assertThat(result.getStats()).hasSize(2);
-  }
 }

@@ -121,12 +121,17 @@
             <configuration>
               <rules>
                 <rule>
-                  <element>PACKAGE</element>
+                  <element>BUNDLE</element>
                   <limits>
                     <limit>
                       <counter>LINE</counter>
+                      <minimum>0.85</minimum>
+                      <value>COVEREDRATIO</value>
+                    </limit>
+                    <limit>
+                      <counter>BRANCH</counter>
                       <minimum>0.80</minimum>
-                      <value>COVEREDRATIO</value>  <!-- 80% line coverage required -->
+                      <value>COVEREDRATIO</value>
                     </limit>
                   </limits>
                 </rule>
@@ -136,6 +141,7 @@
               <goal>check</goal>
             </goals>
             <id>check-coverage</id>
+            <phase>test</phase>
           </execution>
         </executions>
         <groupId>org.jacoco</groupId>

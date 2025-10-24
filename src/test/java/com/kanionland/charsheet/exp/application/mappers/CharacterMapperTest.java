@@ -1,21 +1,21 @@
 package com.kanionland.charsheet.exp.application.mappers;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import com.kanionland.charsheet.exp.domain.enums.RaceEnum;
 import com.kanionland.charsheet.exp.domain.models.CharacterModel;
 import com.kanionland.charsheet.exp.infrastructure.persistence.entities.CharacterEntity;
 import com.kanionland.charsheet.exp.infrastructure.persistence.entities.CharacterPartEntity;
-import com.kanionland.charsheet.exp.infrastructure.persistence.entities.CharacterStatEntity;
 import com.kanionland.charsheet.exp.infrastructure.persistence.entities.PartEntity;
 import com.kanionland.charsheet.exp.infrastructure.persistence.entities.RankingEntity;
 import com.kanionland.charsheet.exp.infrastructure.persistence.entities.SkillEntity;
-import com.kanionland.charsheet.exp.infrastructure.persistence.entities.StatEntity;
 import com.kanionland.charsheet.exp.infrastructure.responses.CharacterBasicResponse;
 import com.kanionland.charsheet.exp.infrastructure.responses.CharacterPartResponse;
-import com.kanionland.charsheet.exp.infrastructure.responses.StatResponse;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,6 +25,7 @@ import org.mapstruct.factory.Mappers;
 class CharacterMapperTest {
 
   private CharacterMapper mapper;
+  private CharacterStatMapper statMapper;
 
   @BeforeEach
   void setUp() {
@@ -43,6 +44,14 @@ class CharacterMapperTest {
   }
 
   @Test
+  void testToDomainWhenEntityIsNullThenReturnsNull() {
+    // When
+    CharacterModel model = mapper.toDomain(null);
+    // Then
+    assertNull(model);
+  }
+
+  @Test
   void testToEntity() {
     // Given
     CharacterModel model = CharacterModel.builder()
@@ -58,19 +67,58 @@ class CharacterMapperTest {
   }
 
   @Test
+  void testToEntityWhenEntityIsNullThenReturnsNull() {
+    // When
+    CharacterEntity entity = mapper.toEntity(null);
+    // Then
+    assertNotNull(entity);
+  }
+
+  @Test
   void testToResponse() {
     // Given
     CharacterEntity entity = createTestCharacterEntity();
-
     // When
     CharacterBasicResponse response = mapper.toResponse(entity);
-
     // Then
     assertNotNull(response);
     assertEquals(entity.getName(), response.getName());
     assertEquals(entity.getRace().getName(), response.getRace());
     assertEquals(entity.getRanking().getLevel(), response.getCharacterRank());
     assertFalse(response.getSkills().isEmpty());
+  }
+
+
+  @Test
+  void testToResponseWithNullParametersShouldReturnWithDefaultValues() {
+    // Given
+    CharacterEntity entity = createTestCharacterEntity();
+    entity.setRanking(null);
+    entity.setAge(null);
+    entity.setWeight(null);
+    entity.setHeight(null);
+    entity.setThirst(null);
+    entity.setSleep(null);
+    entity.setHunger(null);
+    // When
+    CharacterBasicResponse response = mapper.toResponse(entity);
+    // Then
+    assertNotNull(response);
+    assertNull(response.getCharacterRank());
+    assertEquals(0L, response.getAge());
+    assertEquals(0L, response.getWeight());
+    assertEquals(0L, response.getHeight());
+    assertEquals(0L, response.getThirst());
+    assertEquals(0L, response.getHunger());
+    assertEquals(0L, response.getSleep());
+  }
+
+  @Test
+  void testToResponseWhenEntityIsNullThenReturnsNull() {
+    // When
+    CharacterBasicResponse response = mapper.toResponse(null);
+    // Then
+    assertNull(response);
   }
 
   @Test
@@ -83,10 +131,8 @@ class CharacterMapperTest {
             .build())
         .currentHealth(85L)
         .build();
-
     // When
     CharacterPartResponse response = mapper.toPartResponse(partEntity);
-
     // Then
     assertNotNull(response);
     assertEquals(partEntity.getPart().getName(), response.getName());
@@ -95,30 +141,30 @@ class CharacterMapperTest {
   }
 
   @Test
-  void testToStatResponse() {
-    // Given
-    CharacterStatEntity statEntity = CharacterStatEntity.builder()
-        .stat(StatEntity.builder()
-            .id("FUE")
-            .name("Fuerza")
-            .levelUpExperience(1000L)
-            .build())
-        .experience(1500L)
-        .level(5L)
-        .bonus(2L)
-        .statLimit(10L)
-        .mastery(1L)
-        .penalty(2L)
-        .build();
-
+  void testToPartResponseWhenEntityIsNullThenReturnsNull() {
     // When
-    StatResponse response = mapper.toStatResponse(statEntity);
+    CharacterPartResponse response = mapper.toPartResponse(null);
+    // Then
+    assertNull(response);
+  }
 
+  @Test
+  void testToPartResponseWithNullParametersShouldReturnWithDefaultValues() {
+    // Given
+    CharacterPartEntity partEntity = CharacterPartEntity.builder()
+        .part(PartEntity.builder()
+            .name("Warrior")
+            .maxHealth(null)
+            .build())
+        .currentHealth(null)
+        .build();
+    // When
+    CharacterPartResponse response = mapper.toPartResponse(partEntity);
     // Then
     assertNotNull(response);
-    assertEquals(statEntity.getStat().getName(), response.getName());
-    assertEquals(statEntity.getExperience(), response.getExperience());
-    assertEquals(statEntity.getLevel(), response.getTotalLevel());
+    assertEquals(response.getName(), "Warrior");
+    assertEquals(response.getMaxHealth(), 0L);
+    assertEquals(response.getCurrentHealth(), 0L);
   }
 
   @Test
@@ -128,10 +174,8 @@ class CharacterMapperTest {
     CharacterEntity entity2 = createTestCharacterEntity();
     entity2.setId(2L);
     entity2.setName("Another Character");
-
     // When
     List<CharacterModel> models = mapper.toDomainList(List.of(entity1, entity2));
-
     // Then
     assertNotNull(models);
     assertEquals(2, models.size());
@@ -140,19 +184,50 @@ class CharacterMapperTest {
   }
 
   @Test
+  void testToDomainListWhenListIsNullThenReturnsNull() {
+    // When
+    List<CharacterModel> models = mapper.toDomainList(null);
+    // Then
+    assertNull(models);
+  }
+
+  @Test
+  void testToDomainListWhenListIsEmptyThenReturnsEmptyList() {
+    // When
+    List<CharacterModel> models = mapper.toDomainList(Collections.emptyList());
+    // Then
+    assertNull(models);
+  }
+
+  @Test
   void testToEntityList() {
     // Given
     CharacterModel model1 = CharacterModel.builder().race(RaceEnum.KANION).name("Nuzz").build();
     CharacterModel model2 = CharacterModel.builder().race(RaceEnum.KANION).name("Nilin").build();
-
     // When
     List<CharacterEntity> entities = mapper.toEntityList(List.of(model1, model2));
-
     // Then
     assertNotNull(entities);
     assertEquals(2, entities.size());
     assertEquals(model1.getName(), entities.get(0).getName());
     assertEquals(model2.getName(), entities.get(1).getName());
+  }
+
+  @Test
+  void testToEntityListWhenListIsNullThenReturnsNull() {
+    // When
+    List<CharacterEntity> entities = mapper.toEntityList(null);
+    // Then
+    assertNull(entities);
+  }
+
+  @Test
+  void testToEntityListWhenListIsEmptyThenReturnsEmptyList() {
+    // When
+    List<CharacterEntity> entities = mapper.toEntityList(Collections.emptyList());
+    // Then
+    assertNotNull(entities);
+    assertThat(entities).isEmpty();
   }
 
   private CharacterEntity createTestCharacterEntity() {

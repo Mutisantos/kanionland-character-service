@@ -1,4 +1,4 @@
-package com.kanionland.charsheet.exp.application.config;
+package com.kanionland.charsheet.exp.application.configs;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;

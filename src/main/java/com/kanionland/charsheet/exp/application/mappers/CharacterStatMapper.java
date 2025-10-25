@@ -1,12 +1,11 @@
 package com.kanionland.charsheet.exp.application.mappers;
 
-import com.kanionland.charsheet.exp.infrastructure.mappers.RankingEntityMapper;
 import com.kanionland.charsheet.exp.infrastructure.persistence.entities.CharacterStatEntity;
 import com.kanionland.charsheet.exp.infrastructure.responses.StatResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring", uses = {RankingEntityMapper.class})
+@Mapper(componentModel = "spring")
 public interface CharacterStatMapper {
 
   @Mapping(target = "name", source = "stat.name")

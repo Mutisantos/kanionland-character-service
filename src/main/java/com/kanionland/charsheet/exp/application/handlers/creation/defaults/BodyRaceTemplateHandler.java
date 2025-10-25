@@ -1,7 +1,7 @@
 package com.kanionland.charsheet.exp.application.handlers.creation.defaults;
 
 
-import com.kanionland.charsheet.exp.application.config.BodyTemplates;
+import com.kanionland.charsheet.exp.application.configs.BodyTemplates;
 import com.kanionland.charsheet.exp.domain.enums.RaceEnum;
 import com.kanionland.charsheet.exp.domain.models.CharacterModel;
 import com.kanionland.charsheet.exp.domain.models.Part;

@@ -19,6 +19,9 @@ public class CharacterBasicResponse {
   private int age;
   private int weight;
   private int height;
+  private int thirst;
+  private int hunger;
+  private int sleep;
   private int rankingId;
   private int characterRank;
   private List<String> inventory;

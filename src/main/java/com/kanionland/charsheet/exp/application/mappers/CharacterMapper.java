@@ -4,17 +4,15 @@ import com.kanionland.charsheet.exp.domain.models.CharacterModel;
 import com.kanionland.charsheet.exp.infrastructure.mappers.RankingEntityMapper;
 import com.kanionland.charsheet.exp.infrastructure.persistence.entities.CharacterEntity;
 import com.kanionland.charsheet.exp.infrastructure.persistence.entities.CharacterPartEntity;
-import com.kanionland.charsheet.exp.infrastructure.persistence.entities.CharacterStatEntity;
 import com.kanionland.charsheet.exp.infrastructure.persistence.entities.SkillEntity;
 import com.kanionland.charsheet.exp.infrastructure.responses.CharacterBasicResponse;
 import com.kanionland.charsheet.exp.infrastructure.responses.CharacterPartResponse;
-import com.kanionland.charsheet.exp.infrastructure.responses.StatResponse;
 import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
-@Mapper(componentModel = "spring", uses = {RankingEntityMapper.class})
+@Mapper(componentModel = "spring", uses = {RankingEntityMapper.class, CharacterStatMapper.class})
 public interface CharacterMapper {
 
   CharacterModel toDomain(CharacterEntity entity);
@@ -40,11 +38,5 @@ public interface CharacterMapper {
   default String mapSkillToResponse(SkillEntity entity) {
     return entity.getName();
   }
-
-  @Mapping(target = "name", source = "stat.name")
-  @Mapping(target = "experience", source = "experience")
-  @Mapping(target = "totalLevel", source = "level")
-    // TODO Provide methods to correctly calculate total level
-  StatResponse toStatResponse(CharacterStatEntity entity);
 
 }

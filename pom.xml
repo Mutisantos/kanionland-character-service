@@ -37,36 +37,16 @@
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
-          <reportsDirectory>${project.build.directory}/surefire-reports
-          </reportsDirectory>
+          <argLine>${argLine} -Xmx1024m</argLine>
           <!-- Prevents build from failing on test failures -->
-          <testFailureIgnore>
-            true
-          </testFailureIgnore>
+          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+          <testFailureIgnore>true</testFailureIgnore>
         </configuration>
         <executions>
           <execution>
             <goals>
               <goal>test</goal>
             </goals>
-            <id>test</id>
-          </execution>
-        </executions>
-        <groupId>org.apache.maven.plugins</groupId>
-        <version>3.2.5</version>
-      </plugin>
-      <plugin>
-        <artifactId>maven-surefire-report-plugin</artifactId>
-        <configuration>
-          <outputDirectory>${project.build.directory}/site/surefire-report</outputDirectory>
-          <showSuccess>true</showSuccess>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>report</goal>
-            </goals>
-            <phase>test</phase>
           </execution>
         </executions>
         <groupId>org.apache.maven.plugins</groupId>
@@ -75,6 +55,7 @@
       <plugin>
         <artifactId>jacoco-maven-plugin</artifactId>
         <configuration>
+          <dataFile>${project.build.directory}/jacoco.exec</dataFile>
           <excludes>
             <exclude>**/configs/**</exclude>
             <exclude>**/models/**</exclude>
@@ -86,7 +67,7 @@
             <exclude>**/responses/**</exclude>
             <exclude>**/entities/**</exclude>
           </excludes>
-          <outputDirectory>${project.build.directory}/site/jacoco</outputDirectory>
+          <outputDirectory>${project.build.directory}/site/surefire-report/jacoco</outputDirectory>
         </configuration>
         <executions>
           <execution>
@@ -111,7 +92,7 @@
           </execution>
           <execution>
             <configuration>
-              <outputDirectory>${project.reporting.outputDirectory}/jacoco</outputDirectory>
+              <outputDirectory>${project.build.directory}/site/jacoco</outputDirectory>
             </configuration>
             <goals>
               <goal>report</goal>
@@ -335,6 +316,17 @@
     <lombok.version>1.18.30</lombok.version>
     <org.flyway.version>10.2.0</org.flyway.version>
     <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
+    <sonar.coverage.exclusions>
+      **/configs/**,**/models/**,**/enums/**,**/exception/**,**/*Application.class,**/commands/**,**/requests/**,**/responses/**,**/entities/**
+    </sonar.coverage.exclusions>
+    <sonar.coverage.jacoco.xmlReportPaths>
+      ${project.build.directory}/site/surefire-report/jacoco/jacoco.xml
+    </sonar.coverage.jacoco.xmlReportPaths>
+    <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+    <sonar.java.binaries>${project.build.directory}/classes</sonar.java.binaries>
+    <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+    <sonar.java.libraries>${project.build.directory}/**/*.jar</sonar.java.libraries>
+    <sonar.language>java</sonar.language>
   </properties>
   <scm>
     <connection/>

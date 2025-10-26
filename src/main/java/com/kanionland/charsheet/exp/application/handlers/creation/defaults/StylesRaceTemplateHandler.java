@@ -6,6 +6,7 @@ import com.kanionland.charsheet.exp.domain.enums.RaceEnum;
 import com.kanionland.charsheet.exp.domain.models.CharacterModel;
 import com.kanionland.charsheet.exp.domain.models.CharacterStyle;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ public class StylesRaceTemplateHandler extends AbstractCharacterHandler {
   protected CharacterModel.CharacterModelBuilder process(
       CharacterModel.CharacterModelBuilder builder, RaceEnum race) {
 
-    final List<CharacterStyle> incomingStyles = builder.build().getStyles();
+    final Set<CharacterStyle> incomingStyles = builder.build().getStyles();
     final List<CharacterStyle> defaultStyles = styleTemplates.getTemplates()
         .getOrDefault(race, List.of())
         .stream()
@@ -31,13 +32,13 @@ public class StylesRaceTemplateHandler extends AbstractCharacterHandler {
             .build())
         .collect(Collectors.toList());
     if (!defaultStyles.isEmpty()) {
-      List<CharacterStyle> combinedStyles = Stream.concat(
+      Set<CharacterStyle> combinedStyles = Stream.concat(
               incomingStyles.stream(),
               defaultStyles.stream()
                   .filter(newStyle -> incomingStyles.stream()
                       .noneMatch(existing -> existing.getName().equals(newStyle.getName())))
           )
-          .collect(Collectors.toList());
+          .collect(Collectors.toSet());
       builder.styles(combinedStyles);
     } else {
       builder.styles(incomingStyles);

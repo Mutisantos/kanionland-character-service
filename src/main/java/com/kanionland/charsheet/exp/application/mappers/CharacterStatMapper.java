@@ -12,7 +12,6 @@ public interface CharacterStatMapper {
   @Mapping(target = "experience", source = "experience")
   @Mapping(target = "totalLevel", source = "level")
     // TODO Provide methods to correctly calculate total level
-
   StatResponse toStatResponse(CharacterStatEntity entity);
 
 }

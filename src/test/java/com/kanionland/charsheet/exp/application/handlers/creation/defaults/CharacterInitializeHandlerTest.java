@@ -8,6 +8,7 @@ import com.kanionland.charsheet.exp.domain.models.EquippableObject;
 import com.kanionland.charsheet.exp.domain.models.Item;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -48,8 +49,8 @@ class CharacterInitializeHandlerTest {
         .race(RaceEnum.KANION)
         .inventory(List.of(item))
         .equipment(List.of(equipment))
-        .skills(List.of())
-        .paths(List.of());
+        .skills(Set.of())
+        .paths(Set.of());
 
     // When
     var result = handler.process(builder, RaceEnum.KANION);

@@ -8,29 +8,33 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import com.kanionland.charsheet.exp.domain.enums.RaceEnum;
 import com.kanionland.charsheet.exp.domain.models.CharacterModel;
+import com.kanionland.charsheet.exp.infrastructure.mappers.RankingEntityMapperImpl;
 import com.kanionland.charsheet.exp.infrastructure.persistence.entities.CharacterEntity;
 import com.kanionland.charsheet.exp.infrastructure.persistence.entities.CharacterPartEntity;
+import com.kanionland.charsheet.exp.infrastructure.persistence.entities.CharacterStatEntity;
 import com.kanionland.charsheet.exp.infrastructure.persistence.entities.PartEntity;
 import com.kanionland.charsheet.exp.infrastructure.persistence.entities.RankingEntity;
 import com.kanionland.charsheet.exp.infrastructure.persistence.entities.SkillEntity;
+import com.kanionland.charsheet.exp.infrastructure.persistence.entities.StatEntity;
+import com.kanionland.charsheet.exp.infrastructure.persistence.entities.StyleEntity;
 import com.kanionland.charsheet.exp.infrastructure.responses.CharacterBasicResponse;
 import com.kanionland.charsheet.exp.infrastructure.responses.CharacterPartResponse;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mapstruct.factory.Mappers;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = {CharacterSkillMapperImpl.class, CharacterStatMapperImpl.class,
+    RankingEntityMapperImpl.class, CharacterMapperImpl.class})
 class CharacterMapperTest {
 
+  @Autowired
   private CharacterMapper mapper;
-  private CharacterStatMapper statMapper;
-
-  @BeforeEach
-  void setUp() {
-    mapper = Mappers.getMapper(CharacterMapper.class);
-  }
 
   @Test
   void testToDomain() {
@@ -71,7 +75,7 @@ class CharacterMapperTest {
     // When
     CharacterEntity entity = mapper.toEntity(null);
     // Then
-    assertNotNull(entity);
+    assertNull(entity);
   }
 
   @Test
@@ -92,19 +96,12 @@ class CharacterMapperTest {
   @Test
   void testToResponseWithNullParametersShouldReturnWithDefaultValues() {
     // Given
-    CharacterEntity entity = createTestCharacterEntity();
-    entity.setRanking(null);
-    entity.setAge(null);
-    entity.setWeight(null);
-    entity.setHeight(null);
-    entity.setThirst(null);
-    entity.setSleep(null);
-    entity.setHunger(null);
+    CharacterEntity entity = createNullValuedCharacterEntity();
     // When
     CharacterBasicResponse response = mapper.toResponse(entity);
     // Then
     assertNotNull(response);
-    assertNull(response.getCharacterRank());
+    assertEquals(0L, response.getCharacterRank());
     assertEquals(0L, response.getAge());
     assertEquals(0L, response.getWeight());
     assertEquals(0L, response.getHeight());
@@ -196,7 +193,7 @@ class CharacterMapperTest {
     // When
     List<CharacterModel> models = mapper.toDomainList(Collections.emptyList());
     // Then
-    assertNull(models);
+    assertThat(models).isNotNull().isEmpty();
   }
 
   @Test
@@ -270,7 +267,50 @@ class CharacterMapperTest {
                 .upgradeLevel(1L)
                 .description("Desvía un ataque y deja al rival Vulnerable.")
                 .build()))
+        .styles(Set.of(
+            StyleEntity.builder()
+                .id(1L)
+                .name("Artista Marcial")
+                .styleClass("MARTIAL")
+                .build()))
+        .stats(Set.of(
+            CharacterStatEntity.builder()
+                .id(1L)
+                .level(5L)
+                .experience(2500L)
+                .stat(StatEntity.builder()
+                    .id("FUE")
+                    .name("Fuerza")
+                    .levelUpExperience(1000L)
+                    .build())
+                .penalty(2L)
+                .mastery(1l)
+                .bonus(2L)
+                .statLimit(10L)
+                .build()
+        ))
 
+        .build();
+  }
+
+  private CharacterEntity createNullValuedCharacterEntity() {
+    return CharacterEntity.builder()
+        .id(null)
+        .name(null)
+        .race(RaceEnum.KANION)
+        .title(null)
+        .gender(null)
+        .age(null)
+        .height(null)
+        .weight(null)
+        .thirst(null)
+        .sleep(null)
+        .hunger(null)
+        .ranking(null)
+        .bodyParts(null)
+        .skills(null)
+        .styles(null)
+        .stats(null)
         .build();
   }
 }

@@ -6,6 +6,7 @@ import com.kanionland.charsheet.exp.domain.enums.RaceEnum;
 import com.kanionland.charsheet.exp.domain.models.CharacterModel;
 import com.kanionland.charsheet.exp.domain.models.EquippableObject;
 import com.kanionland.charsheet.exp.domain.models.Item;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -35,8 +36,8 @@ class CharacterInitializeHandlerTest {
     // Then
     assertThat(character.getInventory()).isInstanceOf(LinkedList.class).isEmpty();
     assertThat(character.getEquipment()).isInstanceOf(LinkedList.class).isEmpty();
-    assertThat(character.getSkills()).isInstanceOf(LinkedList.class).isEmpty();
-    assertThat(character.getPaths()).isInstanceOf(LinkedList.class).isEmpty();
+    assertThat(character.getSkills()).isInstanceOf(HashSet.class).isEmpty();
+    assertThat(character.getPaths()).isInstanceOf(HashSet.class).isEmpty();
   }
 
   @Test

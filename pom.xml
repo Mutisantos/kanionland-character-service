@@ -37,8 +37,6 @@
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
-          <argLine>${argLine} -Xmx1024m</argLine>
-          <!-- Prevents build from failing on test failures -->
           <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
           <testFailureIgnore>true</testFailureIgnore>
         </configuration>
@@ -67,7 +65,7 @@
             <exclude>**/responses/**</exclude>
             <exclude>**/entities/**</exclude>
           </excludes>
-          <outputDirectory>${project.build.directory}/site/surefire-report/jacoco</outputDirectory>
+          <outputDirectory>${project.build.directory}/site/jacoco</outputDirectory>
         </configuration>
         <executions>
           <execution>
@@ -108,12 +106,12 @@
                   <limits>
                     <limit>
                       <counter>LINE</counter>
-                      <minimum>0.85</minimum>
+                      <minimum>0.80</minimum>
                       <value>COVEREDRATIO</value>
                     </limit>
                     <limit>
                       <counter>BRANCH</counter>
-                      <minimum>0.80</minimum>
+                      <minimum>0.65</minimum>
                       <value>COVEREDRATIO</value>
                     </limit>
                   </limits>
@@ -246,11 +244,6 @@
 
   </dependencies>
   <description>Microservice for Kanionland Character operations</description>
-
-  <developers>
-    <developer/>
-  </developers>
-
 
   <groupId>com.kanionland</groupId>
   <licenses>

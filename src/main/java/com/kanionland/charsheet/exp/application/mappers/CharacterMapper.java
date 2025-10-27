@@ -4,15 +4,14 @@ import com.kanionland.charsheet.exp.domain.models.CharacterModel;
 import com.kanionland.charsheet.exp.infrastructure.mappers.RankingEntityMapper;
 import com.kanionland.charsheet.exp.infrastructure.persistence.entities.CharacterEntity;
 import com.kanionland.charsheet.exp.infrastructure.persistence.entities.CharacterPartEntity;
-import com.kanionland.charsheet.exp.infrastructure.persistence.entities.SkillEntity;
 import com.kanionland.charsheet.exp.infrastructure.responses.CharacterBasicResponse;
 import com.kanionland.charsheet.exp.infrastructure.responses.CharacterPartResponse;
 import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Named;
 
-@Mapper(componentModel = "spring", uses = {RankingEntityMapper.class, CharacterStatMapper.class})
+@Mapper(componentModel = "spring", uses = {RankingEntityMapper.class, CharacterStatMapper.class,
+    CharacterSkillMapper.class})
 public interface CharacterMapper {
 
   CharacterModel toDomain(CharacterEntity entity);
@@ -33,10 +32,5 @@ public interface CharacterMapper {
   @Mapping(target = "currentHealth", source = "currentHealth")
   @Mapping(target = "maxHealth", source = "part.maxHealth")
   CharacterPartResponse toPartResponse(CharacterPartEntity entity);
-
-  @Named("mapSkillToResponse")
-  default String mapSkillToResponse(SkillEntity entity) {
-    return entity.getName();
-  }
 
 }

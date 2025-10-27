@@ -49,13 +49,17 @@ class CharacterStylesHandlerTest {
     CharacterStyle style1 = CharacterStyle.builder().name("Warrior").build();
     CharacterStyle style2 = CharacterStyle.builder().name("Mage").build();
 
-    StyleEntity styleEntity1 = new StyleEntity();
-    styleEntity1.setId(1L);
-    styleEntity1.setName("Warrior");
+    StyleEntity styleEntity1 = StyleEntity.builder()
+        .name("Warrior")
+        .styleClass("warrior")
+        .id(1L)
+        .build();
 
-    StyleEntity styleEntity2 = new StyleEntity();
-    styleEntity2.setId(2L);
-    styleEntity2.setName("Mage");
+    StyleEntity styleEntity2 = StyleEntity.builder()
+        .name("Mage")
+        .styleClass("warrior")
+        .id(2L)
+        .build();
 
     CharacterModel model = CharacterModel.builder()
         .styles(Set.of(style1, style2))

@@ -86,7 +86,7 @@ class StatMapperTest {
     StatResponse response = mapper.toStatResponse(statEntity);
     // Then
     assertNotNull(response);
-    assertEquals(statEntity.getStat().getName(), response.getName());
+    assertNull(response.getName());
     assertEquals(0L, response.getExperience());
     assertEquals(0L, response.getTotalLevel());
   }

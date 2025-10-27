@@ -6,6 +6,7 @@ import com.kanionland.charsheet.exp.infrastructure.mappers.CharacterCreationMapp
 import com.kanionland.charsheet.exp.infrastructure.requests.CreateCharacterRequest;
 import com.kanionland.charsheet.exp.infrastructure.responses.CharacterBasicResponse;
 import jakarta.validation.Valid;
+import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +30,7 @@ public class CharacterController {
       @Valid @RequestBody CreateCharacterRequest request) {
     final CreateCharacterCommand creationCommand = characterCreationMapper.toCommand(request);
     final CharacterBasicResponse character = characterCreationPort.createCharacter(creationCommand);
-    return ResponseEntity.ok(character);
+    return ResponseEntity.created(URI.create("/characters/" + character.getName())).body(character);
   }
 
 

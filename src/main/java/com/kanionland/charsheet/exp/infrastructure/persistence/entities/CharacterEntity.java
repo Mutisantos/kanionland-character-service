@@ -78,7 +78,7 @@ public class CharacterEntity {
   private List<CharacterPartEntity> bodyParts;
 
   @OneToMany(mappedBy = "character", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<CharacterStatEntity> stats;
+  private Set<CharacterStatEntity> stats;
 
   @ManyToMany
   @JoinTable(

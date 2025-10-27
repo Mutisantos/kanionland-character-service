@@ -12,6 +12,7 @@ import com.kanionland.charsheet.exp.infrastructure.persistence.entities.StatRace
 import com.kanionland.charsheet.exp.infrastructure.persistence.repositories.StatRepository;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -56,8 +57,12 @@ public class CharacterStatsHandlerTest {
     final CharacterEntity process = handler.process(onBuildCharacter, model);
     //Then
     assertThat(process.getStats()).hasSize(2);
-    assertThat(process.getStats().get(0).getStat().getId()).isEqualTo("FUE");
-    assertThat(process.getStats().get(1).getStat().getId()).isEqualTo("DEF");
+    final List<String> stats = process.getStats().stream()
+        .map(stat -> stat.getStat().getId())
+        .sorted()
+        .collect(Collectors.toList());
+    assertThat(stats.get(0)).isEqualTo("DEF");
+    assertThat(stats.get(1)).isEqualTo("FUE");
   }
 
 }

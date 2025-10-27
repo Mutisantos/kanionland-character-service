@@ -28,3 +28,5 @@ logging:
     org.springframework: DEBUG
     com.kanionland: DEBUG
 
+jwt:
+  secret: ${JWT_SECRET}

@@ -43,9 +43,8 @@ class GlobalControllerAdviceTest {
   }
 
   @Test
-  void whenHandleHttpClientErrorException_thenReturnsBadRequest() {
+  void whenHandleHttpClientErrorExceptionthenReturnsBadRequest() {
     // Given
-    FieldError fieldError = new FieldError("object", "field", "defaultMessage");
     HttpClientErrorException ex = mock(HttpClientErrorException.class);
     when(ex.getStatusCode()).thenReturn(HttpStatus.BAD_REQUEST);
     // When
@@ -57,9 +56,8 @@ class GlobalControllerAdviceTest {
   }
 
   @Test
-  void whenHandleGenericException_thenReturnsBadRequest() {
+  void whenHandleGenericExceptionthenReturnsBadRequest() {
     // Given
-    FieldError fieldError = new FieldError("object", "field", "defaultMessage");
     Exception ex = mock(Exception.class);
     // When
     final ResponseEntity<String> stringResponseEntity =

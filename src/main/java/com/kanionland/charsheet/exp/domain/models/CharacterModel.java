@@ -20,6 +20,7 @@ public class CharacterModel {
   private RaceEnum race;
   private String title;
   private String gender;
+  private String owner;
   private Long age;
   private Long weight;
   private Long height;

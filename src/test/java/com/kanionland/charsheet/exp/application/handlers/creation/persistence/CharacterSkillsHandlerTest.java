@@ -50,10 +50,6 @@ class CharacterSkillsHandlerTest {
         .id(1L)
         .name("Parry")
         .build();
-    SkillEntity skillEntity2 = SkillEntity.builder()
-        .id(2L)
-        .name("Trolleo Ninja")
-        .build();
 
     CharacterModel model = CharacterModel.builder()
         .skills(Set.of(skill1, skill2))

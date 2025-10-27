@@ -30,18 +30,19 @@ class CharacterCreationMapperTest {
         .build();
 
     // When
-    CreateCharacterCommand command = mapper.toCommand(request);
+    CreateCharacterCommand command = mapper.toCommand(request, "muti");
 
     // Then
     assertNotNull(command);
     assertEquals(request.getName(), command.getName());
     assertEquals(request.getRace(), command.getRace().name());
+    assertEquals("muti", command.getOwner());
   }
 
   @Test
   void testToCommandWhenRequestIsNull() {
     // When
-    CreateCharacterCommand command = mapper.toCommand(null);
+    CreateCharacterCommand command = mapper.toCommand(null, "muti");
 
     // Then
     assertNull(command);

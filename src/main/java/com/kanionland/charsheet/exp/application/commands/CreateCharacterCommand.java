@@ -24,4 +24,5 @@ public class CreateCharacterCommand {
   private List<String> bodyParts;
   private List<String> styles;
   private List<InitialStat> stats;
+  private String owner;
 }

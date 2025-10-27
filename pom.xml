@@ -60,8 +60,6 @@
             <exclude>**/enums/**</exclude>
             <exclude>**/exception/**</exclude>
             <exclude>**/*Application.class</exclude>
-            <exclude>**/*Config.class</exclude>
-            <exclude>**/*Properties.class</exclude>
             <exclude>**/commands/**</exclude>
             <exclude>**/requests/**</exclude>
             <exclude>**/responses/**</exclude>
@@ -315,7 +313,7 @@
       **/configs/**,**/models/**,**/enums/**,**/exception/**,**/*Application.class,**/commands/**,**/requests/**,**/responses/**,**/entities/**,**/*Config.class,**/*Properties.class
     </sonar.coverage.exclusions>
     <sonar.coverage.jacoco.xmlReportPaths>
-      ${project.build.directory}/site/surefire-report/jacoco/jacoco.xml
+      ${project.build.directory}/site/jacoco/jacoco.xml
     </sonar.coverage.jacoco.xmlReportPaths>
     <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
     <sonar.java.binaries>${project.build.directory}/classes</sonar.java.binaries>

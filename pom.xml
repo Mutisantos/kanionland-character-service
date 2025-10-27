@@ -60,6 +60,8 @@
             <exclude>**/enums/**</exclude>
             <exclude>**/exception/**</exclude>
             <exclude>**/*Application.class</exclude>
+            <exclude>**/*Config.class</exclude>
+            <exclude>**/*Properties.class</exclude>
             <exclude>**/commands/**</exclude>
             <exclude>**/requests/**</exclude>
             <exclude>**/responses/**</exclude>
@@ -310,7 +312,7 @@
     <org.flyway.version>10.2.0</org.flyway.version>
     <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
     <sonar.coverage.exclusions>
-      **/configs/**,**/models/**,**/enums/**,**/exception/**,**/*Application.class,**/commands/**,**/requests/**,**/responses/**,**/entities/**
+      **/configs/**,**/models/**,**/enums/**,**/exception/**,**/*Application.class,**/commands/**,**/requests/**,**/responses/**,**/entities/**,**/*Config.class,**/*Properties.class
     </sonar.coverage.exclusions>
     <sonar.coverage.jacoco.xmlReportPaths>
       ${project.build.directory}/site/surefire-report/jacoco/jacoco.xml

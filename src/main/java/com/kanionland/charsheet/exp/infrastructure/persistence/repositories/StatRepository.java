@@ -14,6 +14,6 @@ public interface StatRepository extends JpaRepository<StatEntity, Long> {
 
   Optional<StatEntity> findByName(String name);
 
-  @Query("SELECT part FROM StatEntity part WHERE part.name IN :names")
-  List<StatEntity> findByNameIn(@Param("names") Collection<String> names);
+  @Query("SELECT part FROM StatEntity part WHERE part.id IN :names")
+  List<StatEntity> findByAbbreviationIn(@Param("names") Collection<String> names);
 }

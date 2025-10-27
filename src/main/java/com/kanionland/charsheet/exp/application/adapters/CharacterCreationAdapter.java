@@ -33,7 +33,6 @@ public class CharacterCreationAdapter implements CharacterCreationPort {
         .build();
     CharacterEntity entity = mapper.toEntity(character);
     entity = characterRelationsChain.getInitialChainHandler().handle(entity, character);
-
     CharacterEntity savedEntity = characterRepository.save(entity);
     return mapper.toResponse(savedEntity);
   }
@@ -43,6 +42,7 @@ public class CharacterCreationAdapter implements CharacterCreationPort {
       CreateCharacterCommand creationCommand) {
     return CharacterModel.builder()
         .name(creationCommand.getName())
+        .owner(creationCommand.getOwner())
         .race(creationCommand.getRace())
         .title(creationCommand.getTitle())
         .gender(creationCommand.getGender())
@@ -58,7 +58,7 @@ public class CharacterCreationAdapter implements CharacterCreationPort {
         .stats(creationCommand.getStats().stream()
             .map(stat -> CharacterStat.builder()
                 .name(stat.getName())
-                .level(stat.getInitialExp())
+                .level(stat.getInitialLevel())
                 .experience(stat.getInitialExp())
                 .limit(stat.getInitialLimit())
                 .build())

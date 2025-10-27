@@ -33,9 +33,9 @@ public class CharacterStatsHandler extends AbstractRelationsHandler {
         .map(CharacterStat::getName)
         .collect(Collectors.toSet());
 
-    Map<String, StatEntity> existingStats = statRepository.findByNameIn(stats)
+    Map<String, StatEntity> existingStats = statRepository.findByAbbreviationIn(stats)
         .stream()
-        .collect(Collectors.toMap(StatEntity::getName, Function.identity()));
+        .collect(Collectors.toMap(StatEntity::getId, Function.identity()));
 
     Set<CharacterStatEntity> characterStats = new HashSet<>();
     for (CharacterStat stat : characterModel.getStats()) {

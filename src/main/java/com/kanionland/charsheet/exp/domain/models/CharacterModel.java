@@ -2,6 +2,7 @@ package com.kanionland.charsheet.exp.domain.models;
 
 import com.kanionland.charsheet.exp.domain.enums.RaceEnum;
 import java.util.List;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -19,6 +20,7 @@ public class CharacterModel {
   private RaceEnum race;
   private String title;
   private String gender;
+  private String owner;
   private Long age;
   private Long weight;
   private Long height;
@@ -27,9 +29,9 @@ public class CharacterModel {
   private List<Part> bodyParts;
   private List<Item> inventory;
   private List<EquippableObject> equipment;
-  private List<Skill> skills;
-  private List<CharacterStyle> styles;
-  private List<CharacterStat> stats;
-  private List<CharacterPath> paths;
+  private Set<Skill> skills;
+  private Set<CharacterStyle> styles;
+  private Set<CharacterStat> stats;
+  private Set<CharacterPath> paths;
 
 }

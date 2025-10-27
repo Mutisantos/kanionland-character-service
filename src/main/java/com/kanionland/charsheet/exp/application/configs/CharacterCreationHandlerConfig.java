@@ -1,4 +1,4 @@
-package com.kanionland.charsheet.exp.application.config;
+package com.kanionland.charsheet.exp.application.configs;
 
 import com.kanionland.charsheet.exp.application.handlers.creation.defaults.BodyRaceTemplateHandler;
 import com.kanionland.charsheet.exp.application.handlers.creation.defaults.CharacterDefaultsChain;

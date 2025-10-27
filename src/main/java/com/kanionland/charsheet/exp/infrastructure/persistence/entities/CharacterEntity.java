@@ -19,8 +19,10 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import java.util.List;
 import java.util.Set;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
@@ -33,6 +35,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class CharacterEntity {
 
   @Id
@@ -41,6 +45,9 @@ public class CharacterEntity {
 
   @Column(unique = true, nullable = false)
   private String name;
+
+  @Column(unique = true, nullable = false)
+  private String owner;
 
   @Column(nullable = false)
   @Enumerated(EnumType.STRING)
@@ -78,7 +85,7 @@ public class CharacterEntity {
   private List<CharacterPartEntity> bodyParts;
 
   @OneToMany(mappedBy = "character", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<CharacterStatEntity> stats;
+  private Set<CharacterStatEntity> stats;
 
   @ManyToMany
   @JoinTable(

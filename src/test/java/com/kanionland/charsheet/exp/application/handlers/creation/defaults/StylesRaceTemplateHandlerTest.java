@@ -3,13 +3,14 @@ package com.kanionland.charsheet.exp.application.handlers.creation.defaults;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
-import com.kanionland.charsheet.exp.application.config.StyleTemplates;
+import com.kanionland.charsheet.exp.application.configs.StyleTemplates;
 import com.kanionland.charsheet.exp.domain.enums.RaceEnum;
 import com.kanionland.charsheet.exp.domain.models.CharacterModel;
 import com.kanionland.charsheet.exp.domain.models.CharacterStyle;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,7 +38,7 @@ class StylesRaceTemplateHandlerTest {
     var builder = CharacterModel.builder()
         .name(CHARACTER_NAME)
         .race(RaceEnum.KANION)
-        .styles(Collections.emptyList());
+        .styles(Collections.emptySet());
     // When
     var result = handler.process(builder, RaceEnum.KANION);
     var character = result.build();
@@ -72,7 +73,7 @@ class StylesRaceTemplateHandlerTest {
     var builder = CharacterModel.builder()
         .name(CHARACTER_NAME)
         .race(RaceEnum.KANION)
-        .styles(Collections.emptyList());
+        .styles(Collections.emptySet());
     // When
     var result = handler.process(builder, RaceEnum.KANION);
     var character = result.build();
@@ -92,7 +93,7 @@ class StylesRaceTemplateHandlerTest {
     var builder = CharacterModel.builder()
         .name(CHARACTER_NAME)
         .race(RaceEnum.KANION)
-        .styles(List.of(existingStyle));
+        .styles(Set.of(existingStyle));
     // When
     var result = handler.process(builder, RaceEnum.KANION);
     var character = result.build();

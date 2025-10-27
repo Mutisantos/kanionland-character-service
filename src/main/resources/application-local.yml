@@ -15,7 +15,7 @@ spring:
       hibernate:
         format_sql: true
   datasource:
-    url: jdbc:postgresql://localhost:5433/kanionland_user
+    url: jdbc:postgresql://localhost:5434/kanionland_characters
     username: kanionland
     password: kanionland123
     driver-class-name: org.postgresql.Driver
@@ -28,3 +28,5 @@ logging:
     org.springframework: DEBUG
     com.kanionland: DEBUG
 
+jwt:
+  secret: ${JWT_SECRET}

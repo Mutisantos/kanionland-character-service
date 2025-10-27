@@ -1,4 +1,4 @@
-package com.kanionland.charsheet.exp.application.config;
+package com.kanionland.charsheet.exp.application.configs;
 
 import java.util.Map;
 import java.util.stream.Collectors;

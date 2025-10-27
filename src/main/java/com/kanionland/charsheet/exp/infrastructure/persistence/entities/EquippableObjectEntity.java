@@ -7,9 +7,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "equippable_objects", uniqueConstraints = {@UniqueConstraint(columnNames = "name")})
+@AllArgsConstructor
+@NoArgsConstructor
 public class EquippableObjectEntity {
 
   @Id

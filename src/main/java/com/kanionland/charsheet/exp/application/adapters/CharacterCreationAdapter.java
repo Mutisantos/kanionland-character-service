@@ -54,7 +54,7 @@ public class CharacterCreationAdapter implements CharacterCreationPort {
             .collect(Collectors.toList()))
         .styles(creationCommand.getStyles().stream()
             .map(style -> CharacterStyle.builder().name(style).build())
-            .collect(Collectors.toList()))
+            .collect(Collectors.toSet()))
         .stats(creationCommand.getStats().stream()
             .map(stat -> CharacterStat.builder()
                 .name(stat.getName())
@@ -62,7 +62,7 @@ public class CharacterCreationAdapter implements CharacterCreationPort {
                 .experience(stat.getInitialExp())
                 .limit(stat.getInitialLimit())
                 .build())
-            .collect(Collectors.toList()))
+            .collect(Collectors.toSet()))
         ;
   }
 

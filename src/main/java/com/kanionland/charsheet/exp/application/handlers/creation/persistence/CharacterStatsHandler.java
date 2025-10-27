@@ -7,8 +7,7 @@ import com.kanionland.charsheet.exp.infrastructure.persistence.entities.Characte
 import com.kanionland.charsheet.exp.infrastructure.persistence.entities.StatEntity;
 import com.kanionland.charsheet.exp.infrastructure.persistence.entities.StatRaceEntity;
 import com.kanionland.charsheet.exp.infrastructure.persistence.repositories.StatRepository;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -38,7 +37,7 @@ public class CharacterStatsHandler extends AbstractRelationsHandler {
         .stream()
         .collect(Collectors.toMap(StatEntity::getName, Function.identity()));
 
-    List<CharacterStatEntity> characterStats = new LinkedList<>();
+    Set<CharacterStatEntity> characterStats = new HashSet<>();
     for (CharacterStat stat : characterModel.getStats()) {
       if (existingStats.containsKey(stat.getName())) {
         final StatEntity statEntity = existingStats.get(stat.getName());

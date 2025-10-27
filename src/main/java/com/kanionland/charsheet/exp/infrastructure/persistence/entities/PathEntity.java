@@ -7,6 +7,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "paths",
@@ -14,6 +16,8 @@ import jakarta.persistence.UniqueConstraint;
         @UniqueConstraint(columnNames = "name")
     }
 )
+@AllArgsConstructor
+@NoArgsConstructor
 public class PathEntity {
 
   @Id
@@ -23,6 +27,5 @@ public class PathEntity {
   @Column(unique = true, nullable = false)
   private String name;
 
-//  main skill
 
 }

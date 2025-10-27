@@ -199,25 +199,11 @@ INSERT INTO stat_race_definitions (stat_id, race, race_limit, race_experience_mu
 INSERT INTO stat_race_definitions (stat_id, race, race_limit, race_experience_multiplier) VALUES ('SON', 'KANION', 0, 1.5);
 INSERT INTO stat_race_definitions (stat_id, race, race_limit, race_experience_multiplier) VALUES ('PSY', 'KANION', 0, 1.5);
 
-INSERT INTO public.ranking_levels id, rank_level, points_required, description) VALUES(1, 1, 0, 'Infanteria');
-INSERT INTO public.ranking_levels
-(id, rank_level, points_required, description)
-VALUES(2, 2, 10, 'Caballero');
-INSERT INTO public.ranking_levels
-(id, rank_level, points_required, description)
-VALUES(4, 4, 100, 'Bronce');
-INSERT INTO public.ranking_levels
-(id, rank_level, points_required, description)
-VALUES(5, 5, 250, 'Plata');
-INSERT INTO public.ranking_levels
-(id, rank_level, points_required, description)
-VALUES(6, 6, 500, 'Oro');
-INSERT INTO public.ranking_levels
-(id, rank_level, points_required, description)
-VALUES(7, 7, 750, 'Platino');
-INSERT INTO public.ranking_levels
-(id, rank_level, points_required, description)
-VALUES(8, 8, 1000, 'Estelar');
-INSERT INTO public.ranking_levels
-(id, rank_level, points_required, description)
-VALUES(9, 9, 500, 'Omega');
+INSERT INTO ranking_levels (id, rank_level, points_required, description) VALUES (1, 1, 0, 'Infanteria');
+INSERT INTO ranking_levels (id, rank_level, points_required, description) VALUES (2, 2, 10, 'Caballero');
+INSERT INTO ranking_levels (id, rank_level, points_required, description) VALUES (4, 4, 100, 'Bronce');
+INSERT INTO ranking_levels (id, rank_level, points_required, description) VALUES (5, 5, 250, 'Plata');
+INSERT INTO ranking_levels (id, rank_level, points_required, description) VALUES (6, 6, 500, 'Oro');
+INSERT INTO ranking_levels (id, rank_level, points_required, description) VALUES (7, 7, 750, 'Platino');
+INSERT INTO ranking_levels (id, rank_level, points_required, description) VALUES (8, 8, 1000, 'Estelar');
+INSERT INTO ranking_levels (id, rank_level, points_required, description) VALUES (9, 9, 500, 'Omega');

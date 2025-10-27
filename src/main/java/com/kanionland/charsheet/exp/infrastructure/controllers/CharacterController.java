@@ -2,15 +2,18 @@ package com.kanionland.charsheet.exp.infrastructure.controllers;
 
 import com.kanionland.charsheet.exp.application.commands.CreateCharacterCommand;
 import com.kanionland.charsheet.exp.application.ports.CharacterCreationPort;
+import com.kanionland.charsheet.exp.application.ports.CharacterQueryPort;
 import com.kanionland.charsheet.exp.infrastructure.mappers.CharacterCreationMapper;
 import com.kanionland.charsheet.exp.infrastructure.requests.CreateCharacterRequest;
 import com.kanionland.charsheet.exp.infrastructure.responses.CharacterBasicResponse;
 import com.kanionland.charsheet.exp.infrastructure.security.JwtTokenProvider;
 import jakarta.validation.Valid;
 import java.net.URI;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -24,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CharacterController {
 
   private final CharacterCreationPort characterCreationPort;
+  private final CharacterQueryPort characterQueryPort;
   private final CharacterCreationMapper characterCreationMapper;
   private final JwtTokenProvider jwtTokenProvider;
 
@@ -37,6 +41,15 @@ public class CharacterController {
         owner);
     final CharacterBasicResponse character = characterCreationPort.createCharacter(creationCommand);
     return ResponseEntity.created(URI.create("/characters/" + character.getName())).body(character);
+  }
+
+  @GetMapping
+  @ResponseStatus(HttpStatus.CREATED)
+  public ResponseEntity<List<CharacterBasicResponse>> getAllUserCharacters(
+      @RequestHeader("Authorization") String authHeader) {
+    final String owner = retrieveUserFromAuth(authHeader);
+    final List<CharacterBasicResponse> characters = characterQueryPort.getAllUserCharacters(owner);
+    return ResponseEntity.ok(characters);
   }
 
   private String retrieveUserFromAuth(String authToken) {

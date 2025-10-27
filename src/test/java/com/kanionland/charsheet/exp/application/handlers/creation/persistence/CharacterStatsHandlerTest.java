@@ -31,11 +31,11 @@ public class CharacterStatsHandlerTest {
   @Test
   void whenProcessAndStatsExistThenShouldSaveStats() {
     //Given
-    CharacterStat characterStatFue = CharacterStat.builder().abbreviation("FUE").name("Fuerza")
+    CharacterStat characterStatFue = CharacterStat.builder().name("FUE")
         .build();
-    CharacterStat characterStatDef = CharacterStat.builder().abbreviation("DEF").name("Defensa")
+    CharacterStat characterStatDef = CharacterStat.builder().name("DEF")
         .build();
-    CharacterStat characterStatUnknown = CharacterStat.builder().abbreviation("UNK").name("N/A")
+    CharacterStat characterStatUnknown = CharacterStat.builder().name("UNK")
         .build();
     StatEntity statEntityFue = StatEntity.builder().id("FUE").name("Fuerza").build();
     StatEntity statEntityDef = StatEntity.builder().id("DEF").name("Defensa").build();
@@ -51,7 +51,7 @@ public class CharacterStatsHandlerTest {
         .race(RaceEnum.KANION)
         .build();
     CharacterEntity onBuildCharacter = CharacterEntity.builder().race(RaceEnum.KANION).build();
-    when(statRepository.findByNameIn(Set.of("Fuerza", "Defensa", "N/A")))
+    when(statRepository.findByAbbreviationIn(Set.of("FUE", "DEF", "UNK")))
         .thenReturn(List.of(statEntityFue, statEntityDef));
     //When
     final CharacterEntity process = handler.process(onBuildCharacter, model);

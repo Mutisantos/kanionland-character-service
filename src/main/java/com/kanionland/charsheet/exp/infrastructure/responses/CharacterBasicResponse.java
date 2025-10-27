@@ -16,6 +16,7 @@ public class CharacterBasicResponse {
   private String race;
   private String title;
   private String gender;
+  private String owner;
   private int age;
   private int weight;
   private int height;

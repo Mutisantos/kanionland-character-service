@@ -19,7 +19,7 @@ jobs:
 
       - name: Build and test with Maven
         run: |
-          mvn clean build
+          mvn clean install
   site:
     runs-on: ubuntu-latest
     needs: build
